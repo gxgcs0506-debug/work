@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>数据抓取</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link href="resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+    <link href="data/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="files/数据抓取/styles.css" type="text/css" rel="stylesheet"/>
+    <script src="resources/scripts/jquery-3.2.1.min.js"></script>
+    <script src="resources/scripts/axure/axQuery.js"></script>
+    <script src="resources/scripts/axure/globals.js"></script>
+    <script src="resources/scripts/axutils.js"></script>
+    <script src="resources/scripts/axure/annotation.js"></script>
+    <script src="resources/scripts/axure/axQuery.std.js"></script>
+    <script src="resources/scripts/axure/doc.js"></script>
+    <script src="resources/scripts/messagecenter.js"></script>
+    <script src="resources/scripts/axure/events.js"></script>
+    <script src="resources/scripts/axure/recording.js"></script>
+    <script src="resources/scripts/axure/action.js"></script>
+    <script src="resources/scripts/axure/expr.js"></script>
+    <script src="resources/scripts/axure/geometry.js"></script>
+    <script src="resources/scripts/axure/flyout.js"></script>
+    <script src="resources/scripts/axure/model.js"></script>
+    <script src="resources/scripts/axure/repeater.js"></script>
+    <script src="resources/scripts/axure/sto.js"></script>
+    <script src="resources/scripts/axure/utils.temp.js"></script>
+    <script src="resources/scripts/axure/variables.js"></script>
+    <script src="resources/scripts/axure/drag.js"></script>
+    <script src="resources/scripts/axure/move.js"></script>
+    <script src="resources/scripts/axure/visibility.js"></script>
+    <script src="resources/scripts/axure/style.js"></script>
+    <script src="resources/scripts/axure/adaptive.js"></script>
+    <script src="resources/scripts/axure/tree.js"></script>
+    <script src="resources/scripts/axure/init.temp.js"></script>
+    <script src="resources/scripts/axure/legacy.js"></script>
+    <script src="resources/scripts/axure/viewer.js"></script>
+    <script src="resources/scripts/axure/math.js"></script>
+    <script src="resources/scripts/axure/jquery.nicescroll.min.js"></script>
+    <script src="data/document.js"></script>
+    <script src="files/数据抓取/data.js"></script>
+    <script type="text/javascript">
+      $axure.utils.getTransparentGifPath = function() { return 'resources/images/transparent.gif'; };
+      $axure.utils.getOtherPath = function() { return 'resources/Other.html'; };
+      $axure.utils.getReloadPath = function() { return 'resources/reload.html'; };
+    </script>
+  </head>
+  <body>
+    <div id="base" class="">
+
+      <!-- Unnamed (矩形) -->
+      <div id="u1548" class="ax_default _文本段落">
+        <div id="u1548_div" class=""></div>
+        <div id="u1548_text" class="text ">
+          <p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">调剂信息爬取的网址</span></p><p style="font-size:14px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">（1）小木虫：http://muchong.com/bbs/kaoyan.php?action=adjust&amp;type=1</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">（2）51考研：https://www.51kywang.com/</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">（3）中国考研网：http://www.chinakaoyan.com/tiaoji/</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;"><br></span></p><p style="font-size:14px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">抓取字段 ——对应【立体化后台-院校库】部分</span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">爬取内容：2022年各院校/专业调剂信息内容的爬取，主要字段如下：</span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">（1）标题</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; eg：山东财经大学部分院系2021年硕士研究生调剂信息</span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">（2）学校</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; eg：兰州大学</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">（3）门类</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; eg：03法学</span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">（4）学科</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; eg：0805材料科学与工程</span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">（5）专业</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; eg：080500材料科学与工程</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">（6）内容</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; eg：</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;"><br></span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">各位拟调剂的2021化学考生：</span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">现在湘潭大学陈盛副教授课题组还有1个专硕名额空缺。</span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">请仔细阅读一下信息，有明确意向且符合要求的考生再发邮件联系。</span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">1. 各科都达到2021年研究生考试的国家线基本要求</span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">2. 因经常需前往中南大学测试、实验，故最好为男性，居住地为湖南省内</span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">3. 如有意，请发邮件 “附带简历并包含考试成绩、本科院校、本科专业、本科实验经历、生源所在地、电话等信息” 至 chensheng0729@xtu.edu.cn</span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">4. 谢谢，并祝各位调剂考生一切顺利!good luck!</span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">课题组简介如下</span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">主要研究方向为液晶高分子，介电高分子。近几年来在Journal of Materials Chemistry A，Journal of Polymer Science Part A: Polymer Chemistry ，Polymer，Polymer Chemistry，Chemical Engineering&nbsp; </span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">Journal，Composites Part&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; A: Applied Science and Manufacturing 等期刊上发表论文二十来篇。研究工作有深度、创新性和特色，获得国际同行的广泛认可。</span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">温馨提示： 该信息自网络渠道整理，没有辨别其有效真实性，若对本信息有意向，请联系院校老师核实。若有不妥，请联系我们删除。同时提醒大家，在调剂复试阶段，一定注意不法分子，在交流过程中涉&nbsp; &nbsp; &nbsp;&nbsp; </span></p><p style="font-size:10px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">及金钱等，切勿相信，谨防上当受骗。谢谢。 删除信息请联系 tiaoji@163.com</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">（7）公布时间</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; eg：2021-03-12</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">（8）年份（按照信息发布时间确定）</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; eg：2021</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;"><br></span></p><p style="font-size:13px;"><span style="font-family:'Arial Negreta', 'Arial Normal', 'Arial', sans-serif;font-weight:700;">（9）招生单位</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; 湘潭大学</span></p><p style="font-size:13px;"><span style="font-family:'Arial Normal', 'Arial', sans-serif;font-weight:400;"><br></span></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u1549" class="ax_default _三级标题">
+        <div id="u1549_div" class=""></div>
+        <div id="u1549_text" class="text ">
+          <p><span>数据爬取-更新</span></p>
+        </div>
+      </div>
+    </div>
+    <script src="resources/scripts/axure/ios.js"></script>
+  </body>
+</html>
