@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Gallery</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f5f7fb;
+      color: #333;
+      padding: 24px;
+      user-select: none;
+      overflow-x: hidden;
+    }
+
+    h1 { text-align: center; margin-bottom: 24px; font-size: 28px; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform .2s ease, box-shadow .2s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .card img {
+      width: 100%;
+      display: block;
+      pointer-events: none;
+      -webkit-user-drag: none;
+    }
+
+    .caption {
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .lightbox.active { display: flex; }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      padding: 10px 18px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 8px;
+      user-select: none;
+    }
+
+    .prev { left: 20px; }
+    .next { right: 20px; }
+
+    .watermark {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      opacity: 0.12;
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent 0,
+        transparent 80px,
+        rgba(0,0,0,0.15) 80px,
+        rgba(0,0,0,0.15) 160px
+      );
+    }
+
+    .watermark::after {
+      content: "CONFIDENTIAL • DO NOT COPY";
+      position: absolute;
+      width: 200%;
+      top: 40%;
+      left: -50%;
+      font-size: 40px;
+      transform: rotate(-25deg);
+      color: rgba(0,0,0,0.2);
+      white-space: nowrap;
+    }
+
+    .devtools-block {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      color: #fff;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      z-index: 10000;
+    }
+  </style>
+</head>
+<body>
+  <h1>图片展示</h1>
+  <div class="gallery" id="gallery"></div>
+
+  <div class="lightbox" id="lightbox">
+    <div class="nav-btn prev" id="prev">❮</div>
+    <img id="lightbox-img" src="" />
+    <div class="nav-btn next" id="next">❯</div>
+  </div>
+
+  <div class="watermark"></div>
+  <div class="devtools-block" id="devtools">DevTools Detected — Access Blocked</div>
+
+  <script>
+    const gallery = document.getElementById('gallery');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const devtoolsBlock = document.getElementById('devtools');
+
+    const encode = str => btoa(str);
+    const decode = str => atob(str);
+
+    const encryptedPaths = [];
+    for (let i = 0; i <= 25; i++) {
+      encryptedPaths.push(encode(`images/img-${i}.png`));
+    }
+
+    let currentIndex = 0;
+
+    encryptedPaths.forEach((enc, i) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const img = document.createElement('img');
+      img.src = decode(enc);
+      img.draggable = false;
+
+      const caption = document.createElement('div');
+      caption.className = 'caption';
+      caption.textContent = `img-${i}.png`;
+
+      card.appendChild(img);
+      card.appendChild(caption);
+
+      card.addEventListener('click', () => {
+        currentIndex = i;
+        showImage();
+      });
+
+      gallery.appendChild(card);
+    });
+
+    function showImage() {
+      lightboxImg.src = decode(encryptedPaths[currentIndex]);
+      lightbox.classList.add('active');
+    }
+
+    prevBtn.onclick = e => {
+      e.stopPropagation();
+      currentIndex = (currentIndex - 1 + encryptedPaths.length) % encryptedPaths.length;
+      showImage();
+    };
+
+    nextBtn.onclick = e => {
+      e.stopPropagation();
+      currentIndex = (currentIndex + 1) % encryptedPaths.length;
+      showImage();
+    };
+
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+      lightboxImg.src = '';
+    });
+
+    document.addEventListener('keydown', e => {
+      if (lightbox.classList.contains('active')) {
+        if (e.key === 'ArrowLeft') prevBtn.onclick(e);
+        if (e.key === 'ArrowRight') nextBtn.onclick(e);
+      }
+
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) ||
+        (e.ctrlKey && ['U','S','C'].includes(e.key.toUpperCase()))
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    setInterval(() => {
+      const threshold = 160;
+      if (
+        window.outerWidth - window.innerWidth > threshold ||
+        window.outerHeight - window.innerHeight > threshold
+      ) {
+        devtoolsBlock.style.display = 'flex';
+        document.body.innerHTML = '';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
