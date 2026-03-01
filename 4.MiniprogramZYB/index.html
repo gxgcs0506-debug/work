@@ -4,18 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Image Gallery</title>
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background: #f5f7fb;
       color: #333;
       padding: 24px;
-      user-select: none;
       overflow-x: hidden;
     }
 
-    h1 { text-align: center; margin-bottom: 24px; font-size: 28px; }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    /* ✅ 新增 h2 样式 */
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 16px;
+      font-weight: normal;
+      color: #888;
+      letter-spacing: 1px;
+      animation: fadePulse 1.5s infinite alternate;
+    }
+
+    @keyframes fadePulse {
+      from { opacity: 0.5; }
+      to { opacity: 1; }
+    }
 
     .gallery {
       display: grid;
@@ -42,8 +63,6 @@
     .card img {
       width: 100%;
       display: block;
-      pointer-events: none;
-      -webkit-user-drag: none;
     }
 
     .caption {
@@ -70,7 +89,6 @@
       max-width: 90%;
       max-height: 90%;
       border-radius: 10px;
-      pointer-events: none;
     }
 
     .nav-btn {
@@ -89,48 +107,14 @@
     .prev { left: 20px; }
     .next { right: 20px; }
 
-    .watermark {
-      pointer-events: none;
-      position: fixed;
-      inset: 0;
-      z-index: 9998;
-      opacity: 0.12;
-      background-image: repeating-linear-gradient(
-        45deg,
-        transparent 0,
-        transparent 80px,
-        rgba(0,0,0,0.15) 80px,
-        rgba(0,0,0,0.15) 160px
-      );
-    }
-
-    .watermark::after {
-      content: "CONFIDENTIAL • DO NOT COPY";
-      position: absolute;
-      width: 200%;
-      top: 40%;
-      left: -50%;
-      font-size: 40px;
-      transform: rotate(-25deg);
-      color: rgba(0,0,0,0.2);
-      white-space: nowrap;
-    }
-
-    .devtools-block {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      color: #fff;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      z-index: 10000;
-    }
   </style>
 </head>
+
 <body>
-  <h1>图片展示</h1>
+
+  <h1>需求案例展示</h1>
+  <h2 id="loading">图片加载中，请稍等...</h2>
+
   <div class="gallery" id="gallery"></div>
 
   <div class="lightbox" id="lightbox">
@@ -139,34 +123,36 @@
     <div class="nav-btn next" id="next">❯</div>
   </div>
 
-  <div class="watermark"></div>
-  <div class="devtools-block" id="devtools">DevTools Detected — Access Blocked</div>
-
   <script>
     const gallery = document.getElementById('gallery');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const prevBtn = document.getElementById('prev');
     const nextBtn = document.getElementById('next');
-    const devtoolsBlock = document.getElementById('devtools');
+    const loadingText = document.getElementById('loading');
 
-    const encode = str => btoa(str);
-    const decode = str => atob(str);
+    const imagePaths = [];
 
-    const encryptedPaths = [];
     for (let i = 0; i <= 25; i++) {
-      encryptedPaths.push(encode(`images/img-${i}.png`));
+      imagePaths.push(`images/img-${i}.png`);
     }
 
     let currentIndex = 0;
+    let loadedCount = 0;
 
-    encryptedPaths.forEach((enc, i) => {
+    imagePaths.forEach((path, i) => {
       const card = document.createElement('div');
       card.className = 'card';
 
       const img = document.createElement('img');
-      img.src = decode(enc);
-      img.draggable = false;
+      img.src = path;
+
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === imagePaths.length) {
+          loadingText.style.display = 'none';
+        }
+      };
 
       const caption = document.createElement('div');
       caption.className = 'caption';
@@ -184,19 +170,19 @@
     });
 
     function showImage() {
-      lightboxImg.src = decode(encryptedPaths[currentIndex]);
+      lightboxImg.src = imagePaths[currentIndex];
       lightbox.classList.add('active');
     }
 
     prevBtn.onclick = e => {
       e.stopPropagation();
-      currentIndex = (currentIndex - 1 + encryptedPaths.length) % encryptedPaths.length;
+      currentIndex = (currentIndex - 1 + imagePaths.length) % imagePaths.length;
       showImage();
     };
 
     nextBtn.onclick = e => {
       e.stopPropagation();
-      currentIndex = (currentIndex + 1) % encryptedPaths.length;
+      currentIndex = (currentIndex + 1) % imagePaths.length;
       showImage();
     };
 
@@ -210,28 +196,8 @@
         if (e.key === 'ArrowLeft') prevBtn.onclick(e);
         if (e.key === 'ArrowRight') nextBtn.onclick(e);
       }
-
-      if (
-        e.key === 'F12' ||
-        (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) ||
-        (e.ctrlKey && ['U','S','C'].includes(e.key.toUpperCase()))
-      ) {
-        e.preventDefault();
-      }
     });
-
-    document.addEventListener('contextmenu', e => e.preventDefault());
-
-    setInterval(() => {
-      const threshold = 160;
-      if (
-        window.outerWidth - window.innerWidth > threshold ||
-        window.outerHeight - window.innerHeight > threshold
-      ) {
-        devtoolsBlock.style.display = 'flex';
-        document.body.innerHTML = '';
-      }
-    }, 1000);
   </script>
+
 </body>
 </html>
